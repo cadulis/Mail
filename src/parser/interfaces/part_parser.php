@@ -135,6 +135,15 @@ abstract class ezcMailPartParser
             {
                 $mainType = strtolower( $matches[0][1] );
                 $subType = strtolower( $matches[0][2] );
+            } else {
+                // matches "file; blahblahblah"
+                preg_match_all( '/^(\S+);/',
+                                $headers['Content-Type'], $matches, PREG_SET_ORDER );
+                if ( count( $matches ) > 0 )
+                {
+                    $mainType = strtolower( $matches[0][1] );
+                    $subType = '';
+                }
             }
         }
         $bodyParser = null;
